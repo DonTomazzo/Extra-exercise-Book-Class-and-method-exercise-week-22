@@ -5,14 +5,14 @@ using System.Linq;
 namespace ConsoleApplikation
 {
    
-    // Detta uppfyller kravet om minst två klasser tillsammans med Book-klassen.
+   
     public abstract class InventoryItem 
     {
         public string Category { get; set; }
         public string ProductName { get; set; }
         public decimal Price { get; set; } 
 
-        // Konstruktor f\u00f6r InventoryItem
+        // Konstruktor för InventoryItem
         public InventoryItem(string category, string productName, decimal price)
         {
             Category = category;
@@ -212,7 +212,7 @@ namespace ConsoleApplikation
             }
         }
 
-        // Hj\u00e4lpmetod f\u00f6r att f\u00e5 decimalinmatning med felhantering och 'q' check
+        // Hjälpmetod för att få decimalinmatning med felhantering och 'q' check
         static decimal GetDecimalInput(string prompt)
         {
             string input;
@@ -235,7 +235,7 @@ namespace ConsoleApplikation
             }
         }
 
-        // Hj\u00e4lpmetod f\u00f6r att f\u00e5 int-inmatning med felhantering och 'q' check
+        // Hjälpmetod för att få int-inmatning med felhantering och 'q' check
         static int GetIntInput(string prompt)
         {
             string input;
@@ -254,7 +254,7 @@ namespace ConsoleApplikation
                 {
                     return value;
                 }
-                Console.WriteLine("Ogiltigt antal. Ange ett positivt heltal eller 'q' f\u00f6r att avsluta.");
+                Console.WriteLine("Ogiltigt antal. Ange ett positivt heltal eller 'q' för att avsluta.");
             }
         }
     }
