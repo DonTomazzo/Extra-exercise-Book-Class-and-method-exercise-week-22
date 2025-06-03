@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq; // N\u00f6dv\u00e4ndig f\u00f6r LINQ
+using System.Linq; 
 
 namespace ConsoleApplikation
 {
-    // Generell basklass f\u00f6r objekt med pris, kategori och namn.
-    // Detta uppfyller kravet om minst tv\u00e5 klasser tillsammans med Book-klassen.
-    public abstract class InventoryItem // Anv\u00e4nder abstract d\u00e5 vi inte direkt skapar InventoryItem-objekt
+   
+    // Detta uppfyller kravet om minst två klasser tillsammans med Book-klassen.
+    public abstract class InventoryItem 
     {
         public string Category { get; set; }
         public string ProductName { get; set; }
-        public decimal Price { get; set; } // decimal \u00e4r b\u00e4ttre f\u00f6r pengar \u00e4n double
+        public decimal Price { get; set; } 
 
         // Konstruktor f\u00f6r InventoryItem
         public InventoryItem(string category, string productName, decimal price)
@@ -20,17 +20,17 @@ namespace ConsoleApplikation
             Price = price;
         }
 
-        // Abstrakt metod som m\u00e5ste implementeras av \u00e4rvande klasser
+       
         public abstract string PrintDetails();
     }
 
-    // Book-klassen \u00e4rver nu fr\u00e5n InventoryItem
+ 
     public class Book : InventoryItem
     {
         public string Author { get; set; }
         public int Pages { get; set; }
 
-        // Konstruktor f\u00f6r Book. Anropar basklassens konstruktor med 'base()'
+ 
         public Book(string category, string productName, decimal price, string author, int pages)
             : base(category, productName, price)
         {
@@ -38,36 +38,34 @@ namespace ConsoleApplikation
             Pages = pages;
         }
 
-        // Implementerar den abstrakta PrintDetails-metoden
+      
         public override string PrintDetails()
         {
-            // F\u00f6r att matcha det \u00e4ldre formatet ("J. K. Rowling, Harry Potter and the Sorcerer's Stone, 223 pages")
-            // anv\u00e4nder vi bara f\u00f6rfattare, titel och sidor.
-            // Om Category och Price ska inkluderas, \u00e4ndra den h\u00e4r raden.
+           
             return $"{Author}, {ProductName}, {Pages} pages, Price: {Price:C2}, Category: {Category}";
         }
     }
 
     class Program
     {
-        static List<InventoryItem> inventoryList = new List<InventoryItem>(); // Global lista f\u00f6r att kunna \u00e5teranv\u00e4ndas
+        static List<InventoryItem> inventoryList = new List<InventoryItem>(); 
 
         static void Main(string[] args)
         {
             Console.WriteLine("## Inventory Management Console App");
-            Console.WriteLine("V\u00e4lkommen till Inventory Management. Du kan l\u00e4gga till olika typer av objekt.");
-            Console.WriteLine("Skriv 'q' n\u00e4r som helst f\u00f6r att avsluta inmatningen.");
+            Console.WriteLine("Välkommen till Inventory Management. Du kan lägga till olika typer av objekt.");
+            Console.WriteLine("Skriv 'q' när som helst för att avsluta inmatningen.");
             Console.WriteLine();
 
             bool keepAdding = true;
             while (keepAdding)
             {
                 Console.WriteLine("\n--- Meny ---");
-                Console.WriteLine("1. L\u00e4gg till en ny bok");
+                Console.WriteLine("1. Lägg till en ny bok");
                 Console.WriteLine("2. Visa befintlig inventarielista");
-                Console.WriteLine("3. S\u00f6k i inventarielistan (Level 4)");
+                Console.WriteLine("3. Sök i inventarielistan (Level 4)");
                 Console.WriteLine("q. Avsluta programmet");
-                Console.Write("V\u00e4lj ett alternativ: ");
+                Console.Write("Välj ett alternativ: ");
 
                 string choice = Console.ReadLine()?.ToLower();
 
@@ -86,16 +84,16 @@ namespace ConsoleApplikation
                         keepAdding = false;
                         break;
                     default:
-                        Console.WriteLine("Ogiltigt val, f\u00f6rs\u00f6k igen.");
+                        Console.WriteLine("Ogiltigt val, försök igen.");
                         break;
                 }
             }
 
-            Console.WriteLine("\nProgrammet avslutas. Tack f\u00f6r idag!");
+            Console.WriteLine("\nProgrammet avslutas. Tack för idag!");
             Console.ReadKey();
         }
 
-        // Metod f\u00f6r att l\u00e4gga till en bok
+        // Metod för att lägga till en bok
         static void AddBook()
         {
             string category, productName, author;
@@ -103,7 +101,7 @@ namespace ConsoleApplikation
             int pages;
             string input;
 
-            Console.WriteLine("\n--- L\u00e4gg till en ny bok ---");
+            Console.WriteLine("\n--- Lägg till en ny bok ---");
 
             // Kategori
             category = GetStringInput("Ange Kategori (t.ex. Fiktion, Fakta): ");
@@ -115,42 +113,42 @@ namespace ConsoleApplikation
             price = GetDecimalInput("Ange Pris: ");
 
             // F\u00f6rfattare
-            author = GetStringInput("Ange f\u00f6rfattare: ");
+            author = GetStringInput("Ange författare: ");
 
             // Antal sidor
             pages = GetIntInput("Ange antal sidor: ");
 
-            // Skapa ett nytt Book-objekt och l\u00e4gg till det i listan
+            // Skapa ett nytt Book-objekt och lägg till det i listan
             Book newBook = new Book(category, productName, price, author, pages);
             inventoryList.Add(newBook);
             Console.WriteLine("Boken har lagts till i inventariet!");
         }
 
-        // Metod f\u00f6r att presentera inventarielistan
+        // Metod för att presentera inventarielistan
         static void PresentInventoryList(string searchTerm = null)
         {
             Console.WriteLine("\n--- Sammanfattning av inventariet ---");
 
             if (inventoryList.Count == 0)
             {
-                Console.WriteLine("Inventarielistan \u00e4r tom.");
+                Console.WriteLine("Inventarielistan är tom.");
                 return;
             }
 
-            // Sortera listan efter pris fr\u00e5n l\u00e5gt till h\u00f6gt med LINQ
-            var sortedList = inventoryList.OrderBy(item => item.Price).ToList(); // LINQ anv\u00e4nds h\u00e4r
+            // Sortera listan efter pris från lågt till högt med LINQ
+            var sortedList = inventoryList.OrderBy(item => item.Price).ToList(); // LINQ används här
 
             decimal totalSum = 0;
 
             foreach (var item in sortedList)
             {
                 string details = item.PrintDetails();
-                // Level 4: Markera s\u00f6kt objekt om s\u00f6kterm finns
+                // Level 4: Markera sökt objekt om sökterm finns
                 if (!string.IsNullOrEmpty(searchTerm) && details.ToLower().Contains(searchTerm.ToLower()))
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow; // S\u00e4tt textf\u00e4rg till gul
+                    Console.ForegroundColor = ConsoleColor.Yellow; // Sätt textfärg till gul
                     Console.WriteLine($"-> {details} <-"); // Markera
-                    Console.ResetColor(); // \u00c5terst\u00e4ll f\u00e4rgen
+                    Console.ResetColor(); 
                 }
                 else
                 {
@@ -160,40 +158,40 @@ namespace ConsoleApplikation
             }
 
             // Summera pris vid presentation av listan
-            Console.WriteLine($"\nTotalt pris f\u00f6r alla objekt: {totalSum:C2}");
+            Console.WriteLine($"\nTotalt pris för alla objekt: {totalSum:C2}");
         }
 
-        // Metod f\u00f6r s\u00f6kfunktion (Level 4)
+        // Metod för sökfunktion (Level 4)
         static void SearchInventory()
         {
-            Console.WriteLine("\n--- S\u00f6k i inventarielistan ---");
-            string searchTerm = GetStringInput("Ange s\u00f6kterm: ");
+            Console.WriteLine("\n--- Sök i inventarielistan ---");
+            string searchTerm = GetStringInput("Ange sökterm: ");
 
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
-                Console.WriteLine("S\u00f6ktermen f\u00e5r inte vara tom.");
+                Console.WriteLine("Söktermen får inte vara tom.");
                 return;
             }
 
-            // S\u00f6k efter objekt som matchar s\u00f6ktermen i deras detaljer
-            // Anv\u00e4nder LINQ f\u00f6r s\u00f6kning
+            // Sök efter objekt som matchar söktermen i deras detaljer
+            // Använder LINQ för sökning
             var searchResults = inventoryList
                                 .Where(item => item.PrintDetails().ToLower().Contains(searchTerm.ToLower()))
                                 .ToList();
 
-            if (searchResults.Any()) // LINQ: Any() f\u00f6r att kolla om det finns n\u00e5gra resultat
+            if (searchResults.Any()) // LINQ: Any() för att kolla om det finns några resultat
             {
-                Console.WriteLine($"\n--- S\u00f6kresultat f\u00f6r '{searchTerm}' ---");
+                Console.WriteLine($"\n--- Sökresultat för '{searchTerm}' ---");
                 // Presentera de s\u00f6kta objekten och markera dem
                 PresentInventoryList(searchTerm); // \u00c5teranv\u00e4nder PresentInventoryList med s\u00f6kterm
             }
             else
             {
-                Console.WriteLine($"Inga objekt matchade s\u00f6ktermen '{searchTerm}'.");
+                Console.WriteLine($"Inga objekt matchade söktermen '{searchTerm}'.");
             }
         }
 
-        // Hj\u00e4lpmetod f\u00f6r att f\u00e5 str\u00e4nginmatning med felhantering och 'q' check
+        // Hjälpmetod för att f\u00e5 str\u00e4nginmatning med felhantering och 'q' check
         static string GetStringInput(string prompt)
         {
             string input;
@@ -210,7 +208,7 @@ namespace ConsoleApplikation
                 {
                     return input.Trim(); // Returnera trimmad str\u00e4ng
                 }
-                Console.WriteLine("Inmatningen f\u00e5r inte vara tom. F\u00f6rs\u00f6k igen.");
+                Console.WriteLine("Inmatningen får inte vara tom. Försök igen.");
             }
         }
 
